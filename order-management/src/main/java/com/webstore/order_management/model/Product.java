@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+//Создаем объект как сущность для БД
 @Entity
 @Table(name = "products")
 public class Product {
@@ -28,7 +28,7 @@ public class Product {
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
-
+    //Создаем связь многие ко многим через products
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
 

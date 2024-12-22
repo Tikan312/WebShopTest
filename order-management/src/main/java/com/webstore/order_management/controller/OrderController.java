@@ -13,15 +13,15 @@ import java.util.Map;
 
 @RestController
 public class OrderController {
-
+    //Автоматически внедряем зависимость
     @Autowired
     private OrderService orderService;
-
+    //Обрабатываем HTTP запрос Get по адресу orders
     @GetMapping("/orders")
     public List<Order> getOrders() {
         return orderService.getAllOrders();
     }
-
+    //Обрабатываем HTTP запрос Get по адресу orders к значению id
     @GetMapping("orders/{id}")
     public Order getOrderById(@PathVariable Long id) {
         try {
@@ -31,20 +31,21 @@ public class OrderController {
             throw new RuntimeException("Заказ не найден по ID: " + id);
         }
     }
-
+    //Обрабатываем HTTP запрос Post по адресу orders
     @PostMapping("/orders")
     public Order createOrder(@RequestBody @Valid Order order) {
         return orderService.createOrder(order);
     }
-
+    //Обрабатываем HTTP запрос Put по адресу orders к значению id
     @PutMapping("/orders/{id}")
     public Order updateOrderStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
         String status = body.get("status");
         orderService.updateOrderStatus(id, status);
         return orderService.getOrder(id);
     }
-
+    //Удаляем заказ по id по адресу orders
     @DeleteMapping("/orders/{id}")
+    //Обращаемся к классу респонс энтити для возвращения HTTP запросов
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         try {
             orderService.deleteOrder(id);
