@@ -70,4 +70,25 @@ public class OrderServiceTest {
         Order mockOrder = new Order();
         when(orderRepository.save(mockOrder)).thenReturn(mockOrder);
     }
+
+    @Test
+    void testUpdateOrder_AlreadyExists() {
+        Order mockOrder = new Order();
+        when(orderRepository.save(mockOrder)).thenReturn(mockOrder);
+    }
+
+    @Test
+    void testDeleteOrder_Success() {
+        Order mockOrder = new Order();
+        when(orderRepository.save(mockOrder)).thenReturn(mockOrder);
+        orderService.deleteOrder(mockOrder.getId());
+        verify(orderRepository, times(1)).save(mockOrder);
+    }
+
+    @Test
+    void testDeleteOrder_NotFound() {
+        Order mockOrder = new Order();
+        when(orderRepository.save(mockOrder)).thenReturn(mockOrder);
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderService.deleteOrder(mockOrder.getId()));
+    }
 }
